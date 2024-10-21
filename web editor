@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dropdown Button</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    #dropdown {
+      display: none;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 200px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      animation: slideDown 0.3s forwards;
+    }
+
+    #dropdown button {
+      display: block;
+      width: 100%;
+      margin-bottom: 5px;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    #dropdown button:hover {
+      background-color: #0056b3;
+    }
+
+    @keyframes slideDown {
+      from { height: 0; opacity: 0; }
+      to { height: auto; opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <button id="mainButton">Show Dropdown</button>
+  <div id="dropdown">
+    <button id="addTextButton">Add Text</button>
+    <button>Button 2</button>
+    <button>Button 3</button>
+  </div>
+
+  <script>
+    const mainButton = document.getElementById('mainButton');
+    const dropdown = document.getElementById('dropdown');
+    const addTextButton = document.getElementById('addTextButton');
+
+    mainButton.addEventListener('click', () => {
+      dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+    });
+
+    addTextButton.addEventListener('click', () => {
+      const userInput = prompt('Enter the text to add:');
+      if (userInput) {
+        const newTextElement = document.createElement('p');
+        newTextElement.textContent = userInput;
+        document.body.appendChild(newTextElement);
+      }
+    });
+  </script>
+
+</body>
+</html>
