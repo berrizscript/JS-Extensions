@@ -51,6 +51,33 @@ styleElement.appendChild(document.createTextNode(`
   .dropdown-button:hover {
     background-color: #0056b3;
   }
+
+  .draggable {
+    position: absolute;
+    cursor: move;
+  }
+
+  .grey-square {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background-color: grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .shoutout-text {
+    font-size: 10px;
+    color: #333;
+    text-align: center;
+    margin-top: 10px;
+  }
 `));
 document.head.appendChild(styleElement);
 
@@ -61,15 +88,21 @@ addTextButton.className = 'dropdown-button';
 dropdown.appendChild(addTextButton);
 
 // Placeholder for other buttons
-let button2 = document.createElement('button');
-button2.textContent = 'Button 2';
-button2.className = 'dropdown-button';
-dropdown.appendChild(button2);
+let addImageButton = document.createElement('button');
+addImageButton.textContent = 'Add Image';
+addImageButton.className = 'dropdown-button';
+dropdown.appendChild(addImageButton);
 
 let button3 = document.createElement('button');
 button3.textContent = 'Button 3';
 button3.className = 'dropdown-button';
 dropdown.appendChild(button3);
+
+// Add small shoutout text below the third button
+let shoutoutText = document.createElement('div');
+shoutoutText.textContent = 'Shoutout to AXOLOTL77';
+shoutoutText.className = 'shoutout-text';
+dropdown.appendChild(shoutoutText);
 
 // Toggle dropdown visibility with sliding animation
 mainButton.addEventListener('click', () => {
@@ -82,12 +115,68 @@ mainButton.addEventListener('click', () => {
   }
 });
 
+// Function to make elements draggable
+function makeDraggable(element) {
+  let offsetX, offsetY;
+  element.onmousedown = (e) => {
+    offsetX = e.clientX - element.offsetLeft;
+    offsetY = e.clientY - element.offsetTop;
+    document.onmousemove = (e) => {
+      element.style.left = (e.clientX - offsetX) + 'px';
+      element.style.top = (e.clientY - offsetY) + 'px';
+    };
+    document.onmouseup = () => {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    };
+  };
+}
+
 // Handle the Add Text button click
 addTextButton.addEventListener('click', () => {
   const userInput = prompt('Enter the text to add:');
   if (userInput) {
-    const newTextElement = document.createElement('p');
+    const newTextElement = document.createElement('div');
     newTextElement.textContent = userInput;
+    newTextElement.className = 'draggable';
+    newTextElement.style.top = '50px';  // Start position
+    newTextElement.style.left = '300px'; // Position to the right of the dropdown
     document.body.appendChild(newTextElement);
+    makeDraggable(newTextElement);
   }
+});
+
+// Handle the Add Image button click
+addImageButton.addEventListener('click', () => {
+  // Create a grey square in the center of the screen
+  let greySquare = document.createElement('div');
+  greySquare.className = 'grey-square';
+  document.body.appendChild(greySquare);
+  greySquare.style.opacity = '1'; // Fade in the square
+
+  // Handle drag and drop
+  greySquare.addEventListener('dragover', (e) => {
+    e.preventDefault(); // Allow dropping
+  });
+
+  greySquare.addEventListener('drop', (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        // Create an image element
+        const img = document.createElement('img');
+        img.src = event.target.result;
+        img.className = 'draggable';
+        img.style.width = '100px';
+        img.style.height = '100px';
+        img.style.top = '100px'; // Initial position
+        img.style.left = '300px'; // Place to the right
+        document.body.appendChild(img);
+        makeDraggable(img);
+      };
+      reader.readAsDataURL(file);
+    }
+  });
 });
