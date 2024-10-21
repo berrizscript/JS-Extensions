@@ -1,7 +1,25 @@
+// Create a container to center the button
+let container = document.createElement('div');
+container.style.position = 'absolute';
+container.style.top = '50%';
+container.style.left = '50%';
+container.style.transform = 'translate(-50%, -50%)';
+container.style.display = 'flex';
+container.style.flexDirection = 'column';
+container.style.alignItems = 'center';
+document.body.appendChild(container);
+
 // Create the main button
 let mainButton = document.createElement('button');
 mainButton.textContent = 'Show Dropdown';
-document.body.appendChild(mainButton);
+mainButton.style.padding = '10px 20px';
+mainButton.style.fontSize = '16px';
+mainButton.style.cursor = 'pointer';
+mainButton.style.backgroundColor = '#007bff';
+mainButton.style.color = 'white';
+mainButton.style.border = 'none';
+mainButton.style.borderRadius = '5px';
+container.appendChild(mainButton);
 
 // Create the dropdown container
 let dropdown = document.createElement('div');
@@ -12,7 +30,7 @@ dropdown.style.borderRadius = '5px';
 dropdown.style.width = '200px';
 dropdown.style.padding = '10px';
 dropdown.style.backgroundColor = '#f9f9f9';
-document.body.appendChild(dropdown);
+container.appendChild(dropdown);
 
 // Create the "Add Text" button inside the dropdown
 let addTextButton = document.createElement('button');
