@@ -31,9 +31,9 @@ dropdown.style.borderRadius = '5px';
 dropdown.style.width = '200px';
 container.appendChild(dropdown);
 
-// Add smooth sliding animation CSS for buttons
-let dropdownStyle = document.createElement('style');
-dropdownStyle.innerHTML = `
+// Add smooth sliding animation for buttons using safe DOM manipulation
+let styleElement = document.createElement('style');
+styleElement.appendChild(document.createTextNode(`
   .dropdown-button {
     display: block;
     width: 100%;
@@ -51,8 +51,8 @@ dropdownStyle.innerHTML = `
   .dropdown-button:hover {
     background-color: #0056b3;
   }
-`;
-document.head.appendChild(dropdownStyle);
+`));
+document.head.appendChild(styleElement);
 
 // Create the "Add Text" button inside the dropdown
 let addTextButton = document.createElement('button');
