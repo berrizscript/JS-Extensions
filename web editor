@@ -23,33 +23,17 @@ container.appendChild(mainButton);
 
 // Create the dropdown container
 let dropdown = document.createElement('div');
-dropdown.style.display = 'none';
-dropdown.style.flexDirection = 'column';
-dropdown.style.marginTop = '10px';
-dropdown.style.border = '1px solid #ccc';
+dropdown.style.maxHeight = '0';
+dropdown.style.overflow = 'hidden';
+dropdown.style.transition = 'max-height 0.5s ease-out, opacity 0.5s ease-out';
+dropdown.style.opacity = '0';
 dropdown.style.borderRadius = '5px';
 dropdown.style.width = '200px';
-dropdown.style.padding = '10px';
-dropdown.style.backgroundColor = '#f9f9f9';
-dropdown.style.overflow = 'hidden';
 container.appendChild(dropdown);
 
-// Add smooth sliding animation CSS
+// Add smooth sliding animation CSS for buttons
 let dropdownStyle = document.createElement('style');
 dropdownStyle.innerHTML = `
-  .slide-down {
-    display: flex;
-    flex-direction: column;
-    max-height: 0;
-    opacity: 0;
-    transition: max-height 0.4s ease, opacity 0.4s ease;
-  }
-
-  .slide-down.active {
-    max-height: 200px; /* Adjust based on number of buttons */
-    opacity: 1;
-  }
-
   .dropdown-button {
     display: block;
     width: 100%;
@@ -87,12 +71,15 @@ button3.textContent = 'Button 3';
 button3.className = 'dropdown-button';
 dropdown.appendChild(button3);
 
-// Initially set the dropdown as sliding down
-dropdown.classList.add('slide-down');
-
 // Toggle dropdown visibility with sliding animation
 mainButton.addEventListener('click', () => {
-  dropdown.classList.toggle('active');
+  if (dropdown.style.maxHeight === '0px' || dropdown.style.maxHeight === '') {
+    dropdown.style.maxHeight = '200px'; // Adjust based on number of buttons
+    dropdown.style.opacity = '1';
+  } else {
+    dropdown.style.maxHeight = '0';
+    dropdown.style.opacity = '0';
+  }
 });
 
 // Handle the Add Text button click
