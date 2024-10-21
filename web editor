@@ -24,43 +24,75 @@ container.appendChild(mainButton);
 // Create the dropdown container
 let dropdown = document.createElement('div');
 dropdown.style.display = 'none';
+dropdown.style.flexDirection = 'column';
 dropdown.style.marginTop = '10px';
 dropdown.style.border = '1px solid #ccc';
 dropdown.style.borderRadius = '5px';
 dropdown.style.width = '200px';
 dropdown.style.padding = '10px';
 dropdown.style.backgroundColor = '#f9f9f9';
+dropdown.style.overflow = 'hidden';
 container.appendChild(dropdown);
+
+// Add smooth sliding animation CSS
+let dropdownStyle = document.createElement('style');
+dropdownStyle.innerHTML = `
+  .slide-down {
+    display: flex;
+    flex-direction: column;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.4s ease;
+  }
+
+  .slide-down.active {
+    max-height: 200px; /* Adjust based on number of buttons */
+    opacity: 1;
+  }
+
+  .dropdown-button {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+
+  .dropdown-button:hover {
+    background-color: #0056b3;
+  }
+`;
+document.head.appendChild(dropdownStyle);
 
 // Create the "Add Text" button inside the dropdown
 let addTextButton = document.createElement('button');
 addTextButton.textContent = 'Add Text';
-addTextButton.style.display = 'block';
-addTextButton.style.width = '100%';
-addTextButton.style.marginBottom = '5px';
-addTextButton.style.padding = '10px';
-addTextButton.style.backgroundColor = '#007bff';
-addTextButton.style.color = 'white';
-addTextButton.style.border = 'none';
-addTextButton.style.cursor = 'pointer';
-addTextButton.style.borderRadius = '5px';
-addTextButton.style.fontSize = '16px';
+addTextButton.className = 'dropdown-button';
 dropdown.appendChild(addTextButton);
 
 // Placeholder for other buttons
 let button2 = document.createElement('button');
 button2.textContent = 'Button 2';
-button2.style = addTextButton.style;
+button2.className = 'dropdown-button';
 dropdown.appendChild(button2);
 
 let button3 = document.createElement('button');
 button3.textContent = 'Button 3';
-button3.style = addTextButton.style;
+button3.className = 'dropdown-button';
 dropdown.appendChild(button3);
 
-// Toggle dropdown visibility
+// Initially set the dropdown as sliding down
+dropdown.classList.add('slide-down');
+
+// Toggle dropdown visibility with sliding animation
 mainButton.addEventListener('click', () => {
-  dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+  dropdown.classList.toggle('active');
 });
 
 // Handle the Add Text button click
