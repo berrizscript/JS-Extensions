@@ -3,7 +3,7 @@ container.style.position = "absolute";
 container.style.top = "50%";
 container.style.left = "50%";
 container.style.transform = "translate(-50%, -50%)";
-container.style.display = "flex";https://github.com/berrizscript/JS-Extensions/edit/main/test
+container.style.display = "flex";
 container.style.flexDirection = "column";
 container.style.alignItems = "center";
 document.body.appendChild(container);
